@@ -1,3 +1,18 @@
 /*- Custom style -*/
 
 // -- Put custom style under this point -- //
+
+.by-line {
+  margin-bottom: 0em; /* 24px/16px */
+  @media (min-width: 940px) {
+    margin-bottom: 0em; /* 24px/18px */
+  }
+}
+
+.index-excerpt {
+  font-size: 1.5em;
+}
+
+.content {
+  font-size: 1.3em;
+}
