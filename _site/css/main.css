@@ -718,9 +718,13 @@ footer {
 .index-excerpt {
   font-size: 1.2em; }
 
-.content {
+code {
+  color: #000000;
+  background: #dadada; }
+
+.content, #page {
   font-size: 1.2em; }
-  .content a {
+  .content a, #page a {
     color: #b70000;
     font-weight: unset; }
 

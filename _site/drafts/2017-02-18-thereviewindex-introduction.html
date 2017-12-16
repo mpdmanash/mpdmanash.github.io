@@ -1,0 +1,92 @@
+<p>The internet is a source of a humongous amount of unstructured content for all sorts of products, in the form of blogs, videos, user and expert reviews, etc. It is almost impossible for anyone to scour all of this disparate data, with contradictory opinions, and thereafter make a correct, or at least optimal, purchase decision.</p>
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td><td class="code"><pre><span class="kt">int</span> <span class="nf">getCorresPoint</span><span class="p">(</span><span class="n">Point</span> <span class="n">p</span><span class="p">,</span> <span class="n">Mat</span><span class="o">&amp;</span> <span class="n">img</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ndisp</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">ofstream</span> <span class="n">mfile</span><span class="p">;</span>
+  <span class="n">mfile</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">"cost.txt"</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="kt">long</span> <span class="n">minCost</span> <span class="o">=</span> <span class="mf">1e9</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">chosen_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">x0r</span> <span class="o">=</span> <span class="n">kpr</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">y0r</span> <span class="o">=</span> <span class="n">kpr</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">ynr</span> <span class="o">=</span> <span class="n">kpr</span><span class="p">[</span><span class="n">kpr</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">x0l</span> <span class="o">=</span> <span class="n">kpl</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">y0l</span> <span class="o">=</span> <span class="n">kpl</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">ynl</span> <span class="o">=</span> <span class="n">kpl</span><span class="p">[</span><span class="n">kpl</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">pt</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="o">-</span><span class="n">ndisp</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">long</span> <span class="n">cost</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="o">-</span><span class="n">w</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">w</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="o">-</span><span class="n">w</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">w</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isLeftKeyPoint</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="n">j</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="n">k</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="n">isRightKeyPoint</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="n">k</span><span class="p">))</span>
+          <span class="k">continue</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">idxl</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="n">j</span><span class="o">-</span><span class="n">x0l</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">ynl</span><span class="o">-</span><span class="n">y0l</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="n">k</span><span class="o">-</span><span class="n">y0l</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">idxr</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">-</span><span class="n">x0r</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">ynr</span><span class="o">-</span><span class="n">y0r</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="n">k</span><span class="o">-</span><span class="n">y0r</span><span class="p">);</span>
+        <span class="n">cost</span> <span class="o">+=</span> <span class="n">costF</span><span class="p">(</span><span class="n">img_left_desc</span><span class="p">.</span><span class="n">row</span><span class="p">(</span><span class="n">idxl</span><span class="p">),</span> <span class="n">img_right_desc</span><span class="p">.</span><span class="n">row</span><span class="p">(</span><span class="n">idxr</span><span class="p">));</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">cost</span> <span class="o">/</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">mfile</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="o">-</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span> <span class="o">&lt;&lt;</span> <span class="n">cost</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">cost</span> <span class="o">&lt;</span> <span class="n">minCost</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">minCost</span> <span class="o">=</span> <span class="n">cost</span><span class="p">;</span>
+      <span class="n">chosen_i</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"minCost: "</span> <span class="o">&lt;&lt;</span> <span class="n">minCost</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">chosen_i</span><span class="p">;</span>
+<span class="p">}</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Generally, the main problem any average consumer faces while trying to research products online is that there are too many sites with far too much information, and there is typically a disparity in the various opinions expressed. Also, it is not easy to differentiate between what is genuine, and what isn’t.</p>
+
+<p>To help resolve these issues, <a href="https://thereviewindex.com">The Review Index</a> has launched its discovery and research engine, which simplifies the process of researching products online. It scours various sources on the internet, and mines opinions and reviews for the products. This information is then presented as a unified, unbiased, feature-wise summary scorecard of the aggregate opinion to the end user.</p>
+
+<blockquote>
+  <p><a href="https://thereviewindex.com">The Review Index</a></p>
+</blockquote>
+
+<p>Leveraging cutting-edge Machine Learning Algorithms and Artificial Neural Networks, The Review Index compiles reviews from popular sources which are relevant, and focuses on detection of fine-grained topics and sentiment implied therein. It focuses on evaluating the pros and cons as indicated by the reviewers, while ensuring that fraudulent content is identified and removed.</p>
+
+<center>$\mathbf{P} = \mathbf{K}\left[\begin{array}{c|c}
+\mathbf{I} &amp; \mathbf{0} \\
+\end{array}\right] \quad \quad \mathbf{P'} = \mathbf{K'}\left[\begin{array}{c|c}
+\mathbf{R} &amp; \mathbf{t} \\
+\end{array}\right]$</center>
+<p><br /></p>
+
+<p>The public beta was launched in January 2017 with six product categories, which include <a href="https://thereviewindex.com/mobiles">Mobiles</a>, <a href="https://thereviewindex.com/speakers">Speakers</a>, <a href="https://thereviewindex.com/televisions">Televisions</a>, <a href="https://thereviewindex.com/routers">Routers</a>, <a href="https://thereviewindex.com/microwaves">Microwaves</a> and <a href="https://thereviewindex.com/washingmachines">Washing Machines</a> and caters to Indian consumers. Reviews from popular online stores are compiled and reconciled using Neural Network based algorithms, and feature-wise summaries of the aggregated opinion is created.</p>
+
+<p>Thus, this search engine enables users to discover the optimal products, which satisfy their various requirements. The users are also provided with access to feature-wise ratings, summary, list of pros and cons, as well as user comment snippets. Eventually, the engine compares the prices for the displayed products across all the online stores, to conclude which one has the most cost-effective offering.</p>
+
+<p>The plan is to expand to more categories such as electronics, home appliances, etc. in the near future, while at the same time expanding the sources of opinions.</p>
+

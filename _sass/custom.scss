@@ -13,7 +13,12 @@
   font-size: 1.2em;
 }
 
-.content {
+code{
+  color: #000000;
+  background: #dadada;
+}
+
+.content, #page {
   font-size: 1.2em;
   a {
     color: #b70000;
