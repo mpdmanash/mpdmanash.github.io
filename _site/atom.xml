@@ -4,7 +4,7 @@
  <title>Manash Pratim</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2017-12-16T13:56:14+05:30</updated>
+ <updated>2017-12-16T15:00:43+05:30</updated>
  <author>
    <name></name>
    <uri></uri>
@@ -14,7 +14,7 @@
  
 
  <entry>
-   <title>TheReviewIndex | Unbiased User Review Summaries | Monochrome</title>
+   <title>TheReviewIndex | Unbiased User Review Summaries</title>
    <link href="http://localhost:4000/thereviewindex-introduction"/>
    <id>http://localhost:4000/thereviewindex-introduction</id>
    <updated>2017-02-18T00:00:00+05:30</updated>

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: Contact
 description: This page describes monochrome.
 ---
 ## About
