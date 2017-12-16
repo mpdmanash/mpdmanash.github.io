@@ -51,7 +51,7 @@ blockquote {
   width: 35px;
 }
 .social-links > .link:hover > .icon {
-  fill: #4b0082;
+  fill: #b70000;
 }
 .social-links > .link:hover:before {
   opacity: 1;
@@ -115,4 +115,26 @@ h2 {
 h2 {
     padding: unset;
   }
+}
+
+.archive-post-list{
+  li{
+    list-style-type: none;
+  }
+  a{
+    color: #b70000;
+    text-decoration: none;
+    font-weight: unset;
+  }
+  h1{
+    font-weight: 400;
+  }
+}
+
+.index-post-title:hover{
+  color: #b70000;
+}
+
+.post-meta {
+    color: #8f8f8f;
 }
