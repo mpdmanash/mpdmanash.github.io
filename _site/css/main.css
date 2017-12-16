@@ -828,11 +828,11 @@ blockquote {
   width: 16px;
   height: 32px; }
 
+h2 {
+  padding: unset; }
+
 @media (min-width: 940px) {
   h2 {
-    font-size: 2em;
-    /* 36px/18px */
-    line-height: 1.8em;
     padding: unset; } }
 .highlight pre {
   background-color: #272822; }
