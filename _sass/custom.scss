@@ -38,8 +38,9 @@ blockquote {
 }
 
 .social-links {
-   display: block;
+  display: block;
   margin-top: 20px;
+  text-align: center;
 }
 .social-links > .link {
   margin: 0;
@@ -57,7 +58,7 @@ blockquote {
   transform: translate3d(0, 0, 0);
   white-space: nowrap;
 }
-.social-links > .link:before {
+/*.social-links > .link:before {
   content: attr(data-title);
   display: inline-block;
   position: absolute;
@@ -90,7 +91,7 @@ blockquote {
   transition: opacity 150ms linear, transform 150ms linear, -webkit-transform 150ms linear;
   transform: translate3d(0, -8px, 0);
   z-index: 100;
-}
+}*/
 .social-links > .link:hover:after {
   opacity: 1;
   transform: translate3d(0, 0, 0);
