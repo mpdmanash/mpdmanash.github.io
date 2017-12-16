@@ -735,6 +735,9 @@ blockquote {
   margin: 0;
   padding: 5px;
   font-size: 0.8em; }
+  .highlight pre {
+    white-space: pre;
+    overflow: auto; }
 
 .highlight pre {
   background-color: #272822; }
