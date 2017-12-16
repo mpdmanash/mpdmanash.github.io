@@ -3,16 +3,35 @@
 // -- Put custom style under this point -- //
 
 .by-line {
-  margin-bottom: 0em; /* 24px/16px */
+  margin-bottom: unset; /* 24px/16px */
   @media (min-width: 940px) {
-    margin-bottom: 0em; /* 24px/18px */
+    margin-bottom: unset; /* 24px/18px */
   }
 }
 
 .index-excerpt {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .content {
-  font-size: 1.3em;
+  font-size: 1.2em;
+  a {
+    color: #b70000;
+    font-weight: unset;
+  }
+}
+
+blockquote {
+    padding-left: 15px;
+    border-left: 3px solid #eee;
+    background-color: unset;
+    p {
+      padding: unset;
+    }
+}
+
+.highlight {
+	margin: 0;
+	padding: 5px;
+	font-size: 0.8em;
 }
