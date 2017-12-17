@@ -12,4 +12,4 @@ I am Manash Pratim Das, a final year undergraduate student at the Indian Institu
 
 My aim is to contribute towards Artificial Intelligent systems that can augment human in tasks that are space or time critical for a human to operate in. Through courses, internships and projects, I itend to gain on the experience and knowledge that would enable me to better advance towards my goal.
 
-My curriculum vitae can be found in this link: [curriculum-vitae](https://manashpratim.com/ManashCV.pdf)
+My curriculum vitae can be found in this link: [curriculum-vitae](http://manashpratim.com/ManashCV.pdf)
