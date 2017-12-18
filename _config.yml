@@ -33,7 +33,7 @@ gems:
   - jekyll-paginate
   - jekyll-sitemap
 
-google_analytics: ''
+google_analytics: 'UA-111335513-1'
 
 # Options
 custom_header: false
