@@ -739,9 +739,6 @@ blockquote {
   margin: 0;
   padding: 5px;
   font-size: 0.8em; }
-  .highlight pre {
-    white-space: pre;
-    overflow: auto; }
 
 .social-links {
   display: block;
@@ -821,7 +818,9 @@ h2 {
   color: #8f8f8f; }
 
 pre {
-  margin: unset; }
+  margin: unset;
+  white-space: pre;
+  overflow: auto; }
 
 p, ul, ol {
   margin-bottom: unset; }
