@@ -31,7 +31,7 @@ sudo apt-get install ruby2.2-dev
 ### Resources
 
 - We found the jekyll tutorials on youtube very quick and useful to get started
-- [Jekyll documentation](http://jekyllrb.com)   
+- [Jekyll documentation](https://jekyllrb.com)   
 
 
 ## Install Monochrome dependencies
@@ -113,7 +113,7 @@ To maintain the vertical rhythm, it has been applied a **Typographic scale** as 
 ## Resources
 
 - We found the jekyll tutorials on youtube very quick and useful to get started
-- [Jekyll documentation](http://jekyllrb.com)   
+- [Jekyll documentation](https://jekyllrb.com)   
 
 ## Todo
 

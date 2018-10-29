@@ -3,11 +3,11 @@ title: Manash Pratim
 description: "An undergraduate student at IIT Kharagpur pursuing research in robotics. Experience in aerial robots, perception, planning and computer vision."
 meta_tags: "manash, pratim, iit, kharagpur, aerial robotics, robotics, computer vision"
 
-url: "http://manashpratim.com"
+url: "https://manashpratim.com"
 author:
   name: "Manash Pratim Das"
   email: "mpdmanash@iitkgp.ac.in"
-  url: "http://manashpratim.com"
+  url: "https://manashpratim.com"
 
 # Build settings
 baseurl: / # Change this to your relative path (ex: /blog/), or leave just a /
@@ -50,6 +50,6 @@ email: mpdmanash@iitkgp.ac.in
 scholar: ze5yAzkAAAAJ&hl
 
 # Details for the RSS feed generator
-url:            'http://manashpratim.com'
+url:            'https://manashpratim.com'
 author:         'Manash Pratim'
 authorTwitter:  'manashraja'

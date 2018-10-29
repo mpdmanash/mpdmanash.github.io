@@ -19,7 +19,7 @@ However, sometimes plotting the data makes more sense. In this article, I'll sho
 ----
 
 ### Python script to plot multiple sets of 1D data
-The script should be able to 1) read data from the terminal and 2) plot the data. One way to read from the terminal is to use [**pipe**](http://www.linfo.org/pipes.html) to redirect the data from the application writing the data to this script. 
+The script should be able to 1) read data from the terminal and 2) plot the data. One way to read from the terminal is to use [**pipe**](https://www.linfo.org/pipes.html) to redirect the data from the application writing the data to this script. 
 <br> For example: `$ python some_application.py | python plot_script.py`
 
 Once the data is being redirected, we can read it in python by the following script (plot_script.py):
@@ -81,7 +81,7 @@ Thus, we can parse the 'data' in 'plot_script.py' using `data.split(',')`. After
    P.I.D controllers.
 
 # Usage: python plot.py -t < X axis timesteps > -n < number of variables>
-# Tutorial: http://manashpratim.com/plot-realtime-terminal-data
+# Tutorial: https://manashpratim.com/plot-realtime-terminal-data
 
 # Author: Manash Pratim Das (mpdmanash@iitkgp.ac.in)
 """
