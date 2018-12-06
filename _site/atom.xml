@@ -2,9 +2,9 @@
 <feed xmlns="https://www.w3.org/2005/Atom">
 
  <title>Manash Pratim</title>
- <link href="https://localhost:4000/atom.xml" rel="self"/>
- <id>https://localhost:4000</id>
- <updated>2017-12-18T17:40:31+05:30</updated>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <id>http://localhost:4000</id>
+ <updated>2018-12-06T18:08:23+05:30</updated>
  <author>
    <name></name>
    <uri></uri>
@@ -15,8 +15,8 @@
 
  <entry>
    <title>Plot real-time terminal data</title>
-   <link href="https://localhost:4000/plot-realtime-terminal-data"/>
-   <id>https://localhost:4000/plot-realtime-terminal-data</id>
+   <link href="http://localhost:4000/plot-realtime-terminal-data"/>
+   <id>http://localhost:4000/plot-realtime-terminal-data</id>
    <updated>2017-12-18T00:00:00+05:30</updated>
    <content type="html">&lt;blockquote&gt; &lt;p&gt;A python script to plot 1D real-time data being written to the stdout by other application&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;When we develop software to process data, there is often a need to quickly visualize it for debug purposes. One most common option is to write the data to the stdout of...</content>
  </entry>

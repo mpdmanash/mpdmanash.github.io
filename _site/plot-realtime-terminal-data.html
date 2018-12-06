@@ -55,11 +55,15 @@
 	    
 	  
 	    
+	  
+	    
 	      <a href="/about" title="About">About</a>
 	    
 	  
 	    
 	      <a href="/archive/" title="Archive">Archive</a>
+	    
+	  
 	    
 	  
 	    
@@ -111,11 +115,15 @@
 	      
 	    
 	      
+	    
+	      
 	        <a href="/about" title="About">About</a>
 	      
 	    
 	      
 	        <a href="/archive/" title="Archive">Archive</a>
+	      
+	    
 	      
 	    
 	      
@@ -381,8 +389,8 @@ Thus, we can parse the ‘data’ in ‘plot_script.py’ using <code class="hig
 
 
 <span class="k">class</span> <span class="nc">AnalogPlot</span><span class="p">:</span>
-    <span class="c"># constr</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxLen</span><span class="p">,</span> <span class="n">variables</span><span class="p">):</span>
+    <span class="c1"># constr
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxLen</span><span class="p">,</span> <span class="n">variables</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">datan</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">variables</span><span class="p">):</span>
             <span class="n">datai</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">maxLen</span><span class="p">)</span>
@@ -390,22 +398,22 @@ Thus, we can parse the ‘data’ in ‘plot_script.py’ using <code class="hig
         <span class="bp">self</span><span class="o">.</span><span class="n">maxLen</span> <span class="o">=</span> <span class="n">maxLen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variables</span>
 
-    <span class="c"># add to buffer</span>
-    <span class="k">def</span> <span class="nf">addToBuf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="c1"># add to buffer
+</span>    <span class="k">def</span> <span class="nf">addToBuf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxLen</span><span class="p">:</span>
             <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">buf</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
             <span class="n">buf</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 
-    <span class="c"># add data</span>
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="c1"># add data
+</span>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">addToBuf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datan</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-    <span class="c"># update plot</span>
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameNum</span><span class="p">,</span> <span class="n">an</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="c1"># update plot
+</span>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameNum</span><span class="p">,</span> <span class="n">an</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">values</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -415,14 +423,14 @@ Thus, we can parse the ‘data’ in ‘plot_script.py’ using <code class="hig
             <span class="k">print</span><span class="p">(</span><span class="s">'exiting'</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="c"># clean up</span>
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># clean up
+</span>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
-    <span class="c"># plot parameters</span>
-    <span class="n">timesteps</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="c1"># plot parameters
+</span>    <span class="n">timesteps</span> <span class="o">=</span> <span class="mi">1000</span>
     <span class="n">variables</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="k">try</span><span class="p">:</span>
