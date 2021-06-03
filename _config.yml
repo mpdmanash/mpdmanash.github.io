@@ -41,15 +41,11 @@ custom_nav_footer: false
 reverse: false
 
 #social-icons
-facebook: mpdmanash
-twitter: manashraja
-instagram: captainmpd
 linkedin: manshpratim
-github: manashraja
-email: mpdmanash@iitkgp.ac.in
+github: mpdmanash
+email: mpdmanash@cmu.edu
 scholar: ze5yAzkAAAAJ&hl
 
 # Details for the RSS feed generator
 url:            'https://manashpratim.com'
 author:         'Manash Pratim'
-authorTwitter:  'manashraja'
