@@ -1,0 +1,58 @@
+I"Ê<blockquote>
+  <p>Details on our RAL-2021 paper</p>
+</blockquote>
+
+<p>Link to source code: <a href="https://github.com/mpdmanash/thermal_photometric_calibration">thermal_photometric_calibration</a>
+<br />
+<br /></p>
+
+<p>The readme file provided in this <a href="https://github.com/mpdmanash/thermal_photometric_calibration/blob/master/README.md">link</a> contains the instructions on how to build and run our code on a demo dataset. This article mainly focuses on the following questions:</p>
+<ol>
+  <li>The algorithm: How it works and what should you expect?</li>
+  <li>The C++ implementation: Where and how is the algorithm implemented in the code?</li>
+  <li>How can you use it in your project or dataset?</li>
+</ol>
+
+<p><br /></p>
+
+<p><img src="/img/irpc-banner.png" alt="irpc-banner" title="IR Photo Calib Banner" /></p>
+
+<h2 id="1-the-algorithm">1. The algorithm</h2>
+<p>First, if you are not familiar with this work, I would refer you to our presentation video which briefly explains our paper. It gives a gentle introduction of the problem and why it is important.</p>
+
+<iframe width="840" height="472" src="https://www.youtube.com/embed/43IW5--44B8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>By now if you have decided to use our algorithm you might fall into one of the following two cases:</p>
+<ul>
+  <li>You have a thermal camera video dataset and you want to generate a calibrated version of the dataset. Since, in this case there is no requirement for real-time processing, we can consider it an offline process.</li>
+  <li>You have a computer vision pipeline which takes live feed from a thermal camera and you want to ensure that the live feed that you provide is photometrically calibrated. This mode of operation has strict real-time performance requirements and thus we can consider it an online process.</li>
+</ul>
+
+<p>Regardless of your mode of operation, our algorithm is primarily designed for the more interesting online mode of operation, which can also be used without any modification in case you are only interested in the offline use case. So let us illustrate the online use case: \</p>
+
+<p>Thermal camera images from a source (live camera or a dataset) are arriving as a stream of images which are labelled as $\ldots, I_{t-5}, I_{t-4}, I_{t-3}, I_{t-2}, I_{t-1}, I_{t}$ where $I_t$ refers to the most recent frame. Between these incoming images, our algorithm requires pixel correspondences. <em>We know that finding these pixel correspondences is hard given that the images have photometric errors</em>, however the assumption is that we can still find a few reliable correspondences between not only one pair of images ({$I_t, I_{t-1}$}) but other pairs ({$I_t, I_{t-i}$},{$I_t, I_{t-j}$},{$I_t, I_{t-k}$}). <strong>So for frame $I_t$ few correspondences each from a bunch of previous frames can allow the algorithm to remove the photometric errors in that frame, which in turn will allow now more stronger correspondences for any down-stream computer vision pipeline.</strong>  \</p>
+
+<p>So in this online setup, our algorithm for any current frame $I_t$ requires only the correspondences $C_t$ from any number $N&gt;1$ of previous frames and the temporal parameters $P_{t-1}$ that have been estimated for the previous frames up to frame $I_{t-1}$. The algorihtm below will then take these correspondences and process each pair of current and previous frame in parallel to estimate the relative temporal parameters $P_{i,t}$.</p>
+
+<p><img src="/img/algo1.png" alt="algo1" title="Algorithm 1" /></p>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+tex2jax: {
+inlineMath: [['$','$'], ['\\(','\\)']],
+processEscapes: true},
+jax: ["input/TeX","input/MathML","input/AsciiMath","output/CommonHTML"],
+extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js", "[Contrib]/a11y/accessibility-menu.js"],
+TeX: {
+extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+equationNumbers: {
+autoNumber: "AMS"
+}
+}
+});
+</script>
+
+<hr />
+:ET

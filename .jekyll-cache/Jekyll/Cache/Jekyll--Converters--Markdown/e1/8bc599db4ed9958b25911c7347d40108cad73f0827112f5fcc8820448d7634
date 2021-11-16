@@ -1,0 +1,342 @@
+I"�W<blockquote>
+  <p>A python script to plot 1D real-time data being written to the stdout by other application</p>
+</blockquote>
+
+<p>When we develop software to process data, there is often a need to quickly visualize it for debug purposes. One most common option is to write the data to the stdout of the terminal. For example:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">print data</code> in Python</li>
+  <li><code class="language-plaintext highlighter-rouge">std::cout &lt;&lt; data &lt;&lt; std::endl;</code> in C++</li>
+</ul>
+
+<p><br />
+However, sometimes plotting the data makes more sense. In this article, I’ll show an example of how to develop a simple tool to plot such data in real-time.</p>
+
+<hr />
+
+<h3 id="python-script-to-plot-multiple-sets-of-1d-data">Python script to plot multiple sets of 1D data</h3>
+<p>The script should be able to 1) read data from the terminal and 2) plot the data. One way to read from the terminal is to use <a href="https://www.linfo.org/pipes.html"><strong>pipe</strong></a> to redirect the data from the application writing the data to this script. 
+<br /> For example: <code class="language-plaintext highlighter-rouge">$ python some_application.py | python plot_script.py</code></p>
+
+<p>Once the data is being redirected, we can read it in python by the following script (plot_script.py):</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">except</span> <span class="nb">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'exiting'</span><span class="p">)</span>
+            <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
+<span class="n">main</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>You may try running it as: <code class="language-plaintext highlighter-rouge">$ ping 127.0.0.1 | python plot_script.py</code>
+<br /><br />
+‘data’ variable in the above script has to be plotted now. In this article, I’ll show you how to parse multiple streams of 1D data. We first generate such synthetic data for the sake of demonstration (synthetic-data.py):</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">math</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mf">3.14</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">math</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mf">3.14</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="s">","</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">+</span><span class="s">","</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>with comma separated output. Here I demonstrate 3 sets of 1D data (x,y,z) also represented as variables.</p>
+<pre>
+&gt; 0.0,1.0,-0.0
+&gt; 0.0174435597087,0.999847849537,-0.0174435597087
+&gt; 0.0348818113261,0.999391444449,-0.0348818113261
+&gt; 0.052309448376,0.99863092362,-0.052309448376
+&gt; 0.0697211676123,0.997566518477,-0.0697211676123
+&gt; 0.0871116706329,0.99619855292,-0.0871116706329
+&gt; 0.104475665491,0.994527443221,-0.104475665491
+&gt; 0.121807868308,0.992553697902,-0.121807868308
+.
+.
+</pre>
+<p><br />
+Thus, we can parse the ‘data’ in ‘plot_script.py’ using <code class="language-plaintext highlighter-rouge">data.split(',')</code>. After adding the <strong>matplotlib</strong> functions, here is our final ‘plot_script.py’ script.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+</pre></td><td class="code"><pre><span class="s">"""
+# A python script to plot sets of 1D time-series data.
+# Multiple sets can be plotted simultaneously.
+# Ideally developed to plot setpoint vs system output in Robotic
+   P.I.D controllers.
+
+# Usage: python plot.py -t &lt; X axis timesteps &gt; -n &lt; number of variables&gt;
+# Tutorial: https://manashpratim.com/plot-realtime-terminal-data
+
+# Author: Manash Pratim Das (mpdmanash@iitkgp.ac.in)
+"""</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="p">,</span> <span class="n">getopt</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+
+<span class="k">class</span> <span class="nc">AnalogPlot</span><span class="p">:</span>
+    <span class="c1"># constr
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxLen</span><span class="p">,</span> <span class="n">variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">datan</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">variables</span><span class="p">):</span>
+            <span class="n">datai</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">maxLen</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">datan</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">datai</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">maxLen</span> <span class="o">=</span> <span class="n">maxLen</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">variables</span>
+
+    <span class="c1"># add to buffer
+</span>    <span class="k">def</span> <span class="nf">addToBuf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">maxLen</span><span class="p">:</span>
+            <span class="n">buf</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">buf</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">buf</span><span class="p">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="c1"># add data
+</span>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">variables</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">variables</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">addToBuf</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">datan</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="c1"># update plot
+</span>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameNum</span><span class="p">,</span> <span class="n">an</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">values</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">variables</span><span class="p">):</span>
+                <span class="n">an</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">set_data</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">maxLen</span><span class="p">),</span> <span class="bp">self</span><span class="p">.</span><span class="n">datan</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">except</span> <span class="nb">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'exiting'</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># clean up
+</span>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+    <span class="c1"># plot parameters
+</span>    <span class="n">timesteps</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">variables</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">opts</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">getopt</span><span class="p">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span><span class="s">"ht:n:"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">getopt</span><span class="p">.</span><span class="n">GetoptError</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">'python plot.py -t &lt; X axis timesteps &gt; -n &lt; number of variables&gt;'</span>
+        <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">opt</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opt</span> <span class="o">==</span> <span class="s">'-h'</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">'python plot.py -t &lt; X axis timesteps &gt; -n &lt; number of variables&gt;'</span>
+            <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">opt</span> <span class="o">==</span> <span class="s">'-t'</span><span class="p">:</span>
+            <span class="n">timesteps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">opt</span> <span class="o">==</span> <span class="s">'-n'</span><span class="p">:</span>
+            <span class="n">variables</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">"Using timesteps ="</span><span class="p">,</span> <span class="n">timesteps</span> 
+    <span class="k">print</span> <span class="s">"Number of variables ="</span><span class="p">,</span> <span class="n">variables</span>
+    <span class="n">analogPlot</span> <span class="o">=</span> <span class="n">AnalogPlot</span><span class="p">(</span><span class="n">timesteps</span><span class="p">,</span> <span class="n">variables</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">axes</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">timesteps</span><span class="p">))</span>
+    <span class="n">an</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">variables</span><span class="p">):</span>
+        <span class="n">ai</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[])</span>
+        <span class="n">an</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ai</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">fig</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">','</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">variables</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">variables</span><span class="p">):</span>
+                    <span class="n">vi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="n">values</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">vi</span><span class="p">)</span>
+                <span class="n">analogPlot</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">an</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">ax</span><span class="p">.</span><span class="n">relim</span><span class="p">()</span>
+                <span class="n">ax</span><span class="p">.</span><span class="n">autoscale_view</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="bp">False</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">plt</span><span class="p">.</span><span class="n">draw</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">"Invalid number of variables"</span>
+        <span class="k">except</span> <span class="nb">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'exiting'</span><span class="p">)</span>
+            <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
+
+    <span class="n">analogPlot</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'exiting.'</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>This script accepts two arguments:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-t</code>: The length of X axis. Since the input data is a time-series data, each input is considered a timestep. Thus this variable determines the number of past timesteps to plot from the current time.</li>
+  <li><code class="language-plaintext highlighter-rouge">-n</code>: Number of variables to plot in the input data. The respective values for the different variables in a timestep are presented in a comma-separated string. Thus, this script can plot multiple 1D data variables.</li>
+</ul>
+
+<p>To visualize the synthetic data we generated before. <br />
+Run <code class="language-plaintext highlighter-rouge">$ python synthetic-data.py | python plot_script.py -t 1000 -n 3</code></p>
+
+<p><br />
+Here is the graph output with different color for different variables:
+<img src="/img/example-plot.png" alt="example-plot" title="example-plot" /></p>
+:ET

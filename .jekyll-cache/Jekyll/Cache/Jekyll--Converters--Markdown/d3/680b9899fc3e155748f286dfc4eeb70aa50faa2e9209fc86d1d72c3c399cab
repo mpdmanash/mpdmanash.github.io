@@ -1,0 +1,25 @@
+I"Ž<blockquote>
+  <p>Details on our RAL-2021 paper</p>
+</blockquote>
+
+<p>Link to source code: <a href="https://github.com/mpdmanash/thermal_photometric_calibration">thermal_photometric_calibration</a>
+<br />
+<br /></p>
+
+<p>The readme file provided in this <a href="https://github.com/mpdmanash/thermal_photometric_calibration/blob/master/README.md">link</a> contains the instructions on how to build and run our code on a demo dataset. This article mainly focuses on the following questions:</p>
+<ol>
+  <li>The algorithm: How it works and what should you expect?</li>
+  <li>The C++ implementation: Where and how is the algorithm implemented in the code?</li>
+  <li>How can you use it in your project or dataset?</li>
+</ol>
+
+<p><br /></p>
+
+<p><img src="/img/irpc-banner.png" alt="irpc-banner" title="IR Photo Calib Banner" /></p>
+
+<h2 id="1-the-algorithm">1. The algorithm</h2>
+
+<p>asdfg adfgsdfg sdfg</p>
+
+<hr />
+:ET
