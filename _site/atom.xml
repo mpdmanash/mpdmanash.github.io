@@ -4,7 +4,7 @@
  <title>Manash Pratim</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <id>http://localhost:4000</id>
- <updated>2018-12-10T19:39:39+05:30</updated>
+ <updated>2021-11-15T20:26:24-05:00</updated>
  <author>
    <name></name>
    <uri></uri>
@@ -14,10 +14,20 @@
  
 
  <entry>
+   <title>Online Photometric Calibration of Automatic Gain Thermal Infrared Cameras</title>
+   <link href="http://localhost:4000/irphotocalib"/>
+   <id>http://localhost:4000/irphotocalib</id>
+   <updated>2021-02-17T00:00:00-05:00</updated>
+   <content type="html">&lt;blockquote&gt; &lt;p&gt;Details on our RAL-2021 paper&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;Link to source code: &lt;a href=&quot;https://github.com/mpdmanash/thermal_photometric_calibration&quot;&gt;thermal_photometric_calibration&lt;/a&gt; &lt;br /&gt; &lt;br /&gt;&lt;/p&gt; &lt;p&gt;The readme file provided in this &lt;a href=&quot;https://github.com/mpdmanash/thermal_photometric_calibration/blob/master/README.md&quot;&gt;link&lt;/a&gt; contains the instructions on how to build and run our code on a demo dataset. This article mainly focuses on the following questions:&lt;/p&gt; &lt;ol&gt; &lt;li&gt;The...</content>
+ </entry>
+
+ 
+
+ <entry>
    <title>Plot real-time terminal data</title>
    <link href="http://localhost:4000/plot-realtime-terminal-data"/>
    <id>http://localhost:4000/plot-realtime-terminal-data</id>
-   <updated>2017-12-18T00:00:00+05:30</updated>
+   <updated>2017-12-18T00:00:00-05:00</updated>
    <content type="html">&lt;blockquote&gt; &lt;p&gt;A python script to plot 1D real-time data being written to the stdout by other application&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;When we develop software to process data, there is often a need to quickly visualize it for debug purposes. One most common option is to write the data to the stdout of...</content>
  </entry>
 
